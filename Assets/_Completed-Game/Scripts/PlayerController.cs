@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
     //private RewardBasedVideoAd rewardBasedVideo;
     private void Awake()
     {
-        ufoGO = GameObject.Find("PlayerBall/UfoBody");
+        ufoGO = GameObject.Find("PlayerBall/UFOBody");
         skinGame = GameObject.Find("/Canvas/ImgSkinBall");
         texturePS = new Texture2D[9];
         textureSkin = new Texture[9];
@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
         // shapes extend ParticleSystem.ShapeModule
         shapes = particlePlay.shape;
         verticesDefault = mesh.vertices;
-        // Khởi động dừng Particle system của Player
+        // Start and stop Particle system of Player
         particlePlay.Stop();
         gold = 0;
         score = 0;

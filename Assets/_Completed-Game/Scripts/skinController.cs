@@ -99,17 +99,6 @@ public class skinController : MonoBehaviour
 
     private void Start()
     {
-#if UNITY_ANDROID
-        string appId = "ca-app-pub-8146090352984302~7814917551";
-#elif UNITY_IPHONE
-            string appId = "ca-app-pub-3940256099942544~1458002511";
-#else
-            string appId = "unexpected_platform";
-#endif
-
-        // Initialize the Google Mobile Ads SDK.
-        //MobileAds.Initialize(appId);
-        this.RequestBanner();
         myGold = PlayerPrefs.GetInt("Sum Gold");
         int idApply = PlayerPrefs.GetInt("Skin Apply");
         loadSumGold();
@@ -128,47 +117,10 @@ public class skinController : MonoBehaviour
         StartCoroutine(testPopup());
     }
 
-    private void RequestBanner()
-    {
-
-#if UNITY_ANDROID
-        string adUnitId = "ca-app-pub-8146090352984302/4278976112";
-#elif UNITY_IPHONE
-            string adUnitId = "ca-app-pub-8146090352984302/4278976112";
-#else
-            string adUnitId = "unexpected_platform";
-#endif
-
-        //bannerView = new BannerView(adUnitId, AdSize.SmartBanner, AdPosition.Bottom);
-
-        //// Called when an ad request has successfully loaded.
-        //bannerView.OnAdLoaded += HandleOnAdLoaded;
-        //// Called when an ad request failed to load.
-        //bannerView.OnAdFailedToLoad += HandleOnAdFailedToLoad;
-        //// Called when an ad is clicked.
-        //bannerView.OnAdOpening += HandleOnAdOpened;
-        //// Called when the user returned from the app after an ad click.
-        //bannerView.OnAdClosed += HandleOnAdClosed;
-        //// Called when the ad click caused the user to leave the application.
-        //bannerView.OnAdLeavingApplication += HandleOnAdLeavingApplication;
-
-        //// Create an empty ad request.
-        //AdRequest request = new AdRequest.Builder().Build();
-
-        //// Load the banner with the request.
-        //bannerView.LoadAd(request);
-    }
-
     public void HandleOnAdLoaded(object sender, EventArgs args)
     {
         MonoBehaviour.print("HandleAdLoaded event received");
     }
-
-    //public void HandleOnAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
-    //{
-    //    MonoBehaviour.print("HandleFailedToReceiveAd event received with message: "
-    //                        + args.Message);
-    //}
 
     public void HandleOnAdOpened(object sender, EventArgs args)
     {
@@ -184,11 +136,6 @@ public class skinController : MonoBehaviour
     {
         MonoBehaviour.print("HandleAdLeavingApplication event received");
     }
-
-    //public void destroyAdBanner()
-    //{
-    //    bannerView.Destroy();
-    //}
 
     IEnumerator testPopup()
     {
@@ -245,31 +192,31 @@ public class skinController : MonoBehaviour
     {
         string[] bienPay;
         bienPay = new string[9];
-        // Nếu Btn thanh toán được mở thì khi nhấn vào sẽ có 2 trường hợp xảy ra
+        // If Pay Button opened is when click on will two case happen.
         if (btnSkin[number].activeInHierarchy == true)
         {
-            // Xác nhận tổng Gold nhỏ hơn giá trị Skin muốn Pay không?
+            // Confirm the total Gold is less than the value Skin wants to Pay?
             if (sumGold < price[number])
             {
                 showPopup();
                 offConfirm();
             }
-            // Nếu tổng Gold lớn hơn Giá Skin thì quá trình Hoàn tất việc mua Skin sẽ diễn ra
+            // If the total Gold is greater than the Skin Price, the Complete Skin purchase process will take place
             else if (sumGold > price[number])
             {
-                // Truyền vào đúng ID skin muốn mua khi Click Btn
+                // Pass the correct ID of the skin you want to buy when Clicking Button
                 bienPay[number] = "Pay Skin" + number;
-                // Lấy tổng tiền trừ đi giá trị Skin mua
+                // Subtract the purchase value of the total money
                 int hieuGold = sumGold - price[number];
                 PlayerPrefs.SetInt("Sum Gold", hieuGold);
                 PlayerPrefs.SetInt(bienPay[number], number);
-                // Cập nhật Text Gold Khi hoàn thành việc Pay
+                // Update Text Gold When completing the Pay
                 loadSumGoldUp();
-                // Đóng BtnSKinPay vừa thanh toán
+                // Close SKinPay Button has just paid
                 btnSkin[number].SetActive(false);
                 btnChoose[number].SetActive(true);
                 SkinBall[number].GetComponent<RotatorSkin>().enabled = true;
-                // Đóng UI Confirm
+                // Close UI Confirm
                 offConfirm();
             }
         }

@@ -10,6 +10,11 @@ public class destroyGO : MonoBehaviour
     public GameObject GoReload;
     public Text scoreText;
 
+    private void Start()
+    {
+        playControll = GameObject.Find("PlayerBall").GetComponent<PlayerController>();
+    }
+
     void OnTriggerEnter(Collider other)
     {
         // ..and if the game object we intersect has the tag 'Pick Up' assigned to it..

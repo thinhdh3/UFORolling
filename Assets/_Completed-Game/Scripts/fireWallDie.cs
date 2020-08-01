@@ -20,6 +20,7 @@ public class fireWallDie : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        playerdie = GameObject.Find("PlayerBall").GetComponent<PlayerController>();
         //the min/max pipe can random
         this._wallMaxY = 2.5f;
         this._wallMinY = 1.0f;
